@@ -23,11 +23,11 @@ def ft_create(flower_name, height, agee, growth):
 
 if __name__ == "__main__":
     count = 0
-print("=== Plant Factory Output ===")
-count += ft_create("Rose", 25, 30, 0)
-count += ft_create("Oak", 200, 365, 0)
-count += ft_create("Cactus", 5, 90, 0)
-count += ft_create("Sunflower", 80, 45, 0)
-count += ft_create("Fern", 15, 120, 0)
+    print("=== Plant Factory Output ===")
+    count += ft_create("Rose", 25, 30, 0)
+    count += ft_create("Oak", 200, 365, 0)
+    count += ft_create("Cactus", 5, 90, 0)
+    count += ft_create("Sunflower", 80, 45, 0)
+    count += ft_create("Fern", 15, 120, 0)
 
-print(f"\nTotal plants created: {count}")
+    print(f"\nTotal plants created: {count}")
