@@ -3,7 +3,7 @@ class Plant:
         self.name = name
         self.height = int(height)
         self.agee = int(agee)
-        self.growth = int(growth);
+        self.growth = int(growth)
 
     def grow(self):
         if self.name == "Rose":
@@ -16,10 +16,12 @@ class Plant:
     def age(self):
         self.agee += 1
 
+
 def ft_create(flower_name, height, agee, growth):
     p = Plant(flower_name, height, agee, growth)
     print(f"Created: {p.name} ({p.height}cm {p.agee} days)")
     return 1
+
 
 if __name__ == "__main__":
     count = 0
