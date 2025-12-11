@@ -5,45 +5,53 @@ class Plant:
         self.age = int(age)
 
 class Flower(Plant):
-    def __init__(self, name, color, bloom):
-        super().__init__(name)
+    def __init__(self, name, height, age, color, bloom):
+        super().__init__(name, height, age)
         self.color = color
+        self.bloom = bloom
+
     def ft_bloom(self):
-        if bloom != 0:
-            return message = "blooming beautifully!\n"
+        if self.bloom != 0:
+            message = "blooming beautifully!\n"
+            return message
         else:
-            return message = "not blooming yet"
+            message = "not blooming yet"
+            return message
 
 class Tree(Plant):
-    def __init__(self, name, trunk_diameter, shade):
-        super().__init__(name)
+    def __init__(self, name, height, age, trunk_diameter, shade):
+        super().__init__(name, height, age)
         self.trunk_diameter = trunk_diameter
-    def produce_shade(self)
-        if shade != 0:
+        self.shade = shade
+
+    def produce_shade(self):
+        if self.shade != 0:
             message = "provides 78 square meters of shade"
+            return message
         else:
             message = "no shade is provided"
+            return message
 
 class Vegetable(Plant):
-    def __init__(self, name, harvest_season, nutritional_value):
-        super().__init__(name)
+    def __init__(self, name, height, age, harvest_season, nutritional_value):
+        super().__init__(name, height, age)
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
 
-def ft_create_flower(flower_name, color, bloom):
-    flower = Flower(flower_name, height, age)
-    print(f"{flower.flower_name} ({}): {flower.height}cm, {flower.age} days, {flower.color} color\n")
-    print(f"{flower.flower_name} is {flower.bloom()}")
+def ft_create_flower(name, height, age, color, bloom):
+    flower = Flower(name, height, age, color, bloom)
+    print(f"{flower.name} ({type(flower).__name__}): {flower.height}cm, {flower.age} days, {flower.color} color")
+    print(f"{flower.name} is {flower.ft_bloom()}\n")
 
-def ft_create_tree(tree_name, trunk_diameter, shade):
-    tree = Tree(tree_name, trunk_diameter, shade)
-    print(f"{tree.tree_name} ({}): {tree.height}cm, {tree.age} days, {tree.trunk_diameter}cm diameter\n")
-    print(f"{tree.tree_name} {tree.produce_shade()}")
+def ft_create_tree(name, height, age, trunk_diameter, shade):
+    tree = Tree(name, height, age, trunk_diameter, shade)
+    print(f"{tree.name} ({type(tree).__name__}): {tree.height}cm, {tree.age} days, {tree.trunk_diameter}cm diameter")
+    print(f"{tree.name} {tree.produce_shade()}\n")
 
-def ft_create_veg(veg_name, harvest_season, nutritional_value):
-    veggie = Vegetable(veg_name, harvest_season, nutritional_value)
-    print(f"{veggie.veg_name} ({}): {veggie.height}cm, {veggie.age} days, {veggie.harvest_season}")
-    print(f"{veggie.veg_name} is rich in vitamin {veggie.nutritional_value}")
+def ft_create_veg(name, height, age, harvest_season, nutritional_value):
+    veggie = Vegetable(name, height, age, harvest_season, nutritional_value)
+    print(f"{veggie.name} ({type(veggie).__name__}): {veggie.height}cm, {veggie.age} days, {veggie.harvest_season}")
+    print(f"{veggie.name} is rich in vitamin {veggie.nutritional_value}")
 
 if __name__ == "__main__":
     print("=== Garden Plant Types ===\n")
