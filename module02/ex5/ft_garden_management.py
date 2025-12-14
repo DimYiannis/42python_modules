@@ -1,9 +1,10 @@
-
 class GardenError(Exception):
     pass
 
+
 class PlantError(GardenError):
     pass
+
 
 class WaterError(GardenError):
     pass
@@ -11,12 +12,14 @@ class WaterError(GardenError):
 
 class GardenManager:
     def __init__(self):
-        self.plants = {} 
-    def add_plant(self, plant_name, water_level=5, sunlight_hours=8):
+        self.plants = {}
+
+    def add_plant(self, plant_name, water_lvl=5, sunlt_hrs=8):
         try:
             if not plant_name or plant_name.strip() == "":
-                raise PlantError("Plant name cannot be empty!")
-            self.plants[plant_name] = {"water": water_level, "sun": sunlight_hours}
+                raise PlantError(
+                    "Plant name cannot be empty!")
+            self.plants[plant_name] = {"water": water_lvl, "sun": sunlt_hrs}
             print(f"Added {plant_name} successfully")
         except PlantError as e:
             print(f"Error adding plant: {e}")
@@ -42,10 +45,20 @@ class GardenManager:
             sun = plant["sun"]
 
             if not (1 <= water <= 10):
-                raise ValueError(f"Water level {water} is too {'low' if water < 1 else 'high'} (min 1, max 10)")
-            if not (2 <= sun <= 12):
-                raise ValueError(f"Sunlight hours {sun} is too {'low' if sun < 2 else 'high'} (min 2, max 12)")
+                if water < 1:
+                    raise ValueError(
+                        f"Water amount {water} is too low (min 1)")
+                else:
+                    raise ValueError(
+                        f"Water amount {water} is too high (max 10)")
 
+            if not (2 <= sun <= 12):
+                if sun < 2:
+                    raise ValueError(
+                        f"Sunlight hours {sun} is too low (min 2)")
+                else:
+                    raise ValueError(
+                        f"Sunlight hours {sun} is too high (max 12)")
             print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
         except (PlantError, ValueError) as e:
             print(f"Error checking {plant_name}: {e}")
@@ -57,7 +70,7 @@ def test_garden_manager():
 
     print("Adding plants to garden...")
     manager.add_plant("tomato")
-    manager.add_plant("lettuce", water_level=15)     
+    manager.add_plant("lettuce", water_level=15)
     manager.add_plant("")
 
     print("Watering plants...")
@@ -76,5 +89,5 @@ def test_garden_manager():
 
     print("Garden management system test complete!")
 
-test_garden_manager()
 
+test_garden_manager()

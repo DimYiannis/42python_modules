@@ -13,7 +13,7 @@ def water_plants(plant_list):
 
 def test_watering_system():
     print("=== Garden Watering System ===")
-    
+
     print("Testing normal watering...")
     good_plants = ["tomato", "lettuce", "carrots"]
     water_plants(good_plants)
