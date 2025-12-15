@@ -1,7 +1,9 @@
 """
-    function to display plants in a garden,
-    showing name, height and age
+function to display plants in a garden,
+showing name, height and age
 """
+
+
 def ft_garden_intro():
     print("=== Welcome to My Garden ===")
     print("Plant: Rose")

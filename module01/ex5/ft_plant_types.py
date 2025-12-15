@@ -4,6 +4,7 @@ class Plant:
         self.height = int(height)
         self.age = int(age)
 
+
 """
 inheritance:
 flower class inherits the attributes of Plant,
@@ -13,6 +14,8 @@ bloom method:
 check whether we display a mesage based on the bloom attribute
 that works as a boolean
 """
+
+
 class Flower(Plant):
     def __init__(self, name, height, age, color, bloom):
         super().__init__(name, height, age)
@@ -49,26 +52,36 @@ class Vegetable(Plant):
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
 
-"""
-funcs to create objects using the above classes
-and display their attributes
-"""
+
 def ft_create_flower(n, h, a, c, bloom):
+    """
+    funcs to create objects using the above classes
+    and display their attributes
+    """
     fl = Flower(n, h, a, c, bloom)
-    print(f"{fl.n} ({type(fl).__name__}): {fl.h}cm, {fl.a} days, {fl.c} color")
-    print(f"{fl.n} is {fl.ft_bloom()}\n")
+    print(
+        f"{fl.name} ({type(fl).__name__}): {fl.height}cm,"
+        f"{fl.age} days, {fl.color} color"
+    )
+    print(f"{fl.name} is {fl.ft_bloom()}\n")
 
 
 def ft_create_tree(n, h, a, d, shade):
     t = Tree(n, h, a, d, shade)
-    print(f"{t.n} ({type(t).__name__}): {t.h}cm, {t.a} days, {t.d}cm diameter")
-    print(f"{t.n} {t.produce_shade()}\n")
+    print(
+        f"{t.name} ({type(t).__name__}): {t.height}cm,"
+        f"{t.age} days, {t.trunk_diameter}cm diameter"
+    )
+    print(f"{t.name} {t.produce_shade()}\n")
 
 
 def ft_create_veg(name, h, age, hrv_sn, nutri_val):
     v = Vegetable(name, h, age, hrv_sn, nutri_val)
-    print(f"{v.name} ({type(v).__name__}): {v.h}cm, {v.age} days, {v.hrv_sn}")
-    print(f"{v.name} is rich in vitamin {v.nutri_val}")
+    print(
+        f"{v.name} ({type(v).__name__}): {v.height}cm,"
+        f"{v.age} days, {v.harvest_season}"
+    )
+    print(f"{v.name} is rich in vitamin {v.nutritional_value}")
 
 
 if __name__ == "__main__":

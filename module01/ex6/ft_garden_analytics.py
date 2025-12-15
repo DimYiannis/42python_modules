@@ -1,19 +1,21 @@
 """
-a class which works as a manager for the gardens 
+a class which works as a manager for the gardens
 that we have
 
-inside there is another class where we compute some stats 
+inside there is another class where we compute some stats
 for the diff gardens
 
 """
 
+
 class GardenManager:
     def __init__(self):
         self.gardens = ()
-"""
-method to create a garden
-"""
+
     def create_garden(self, name):
+        """
+        method to create a garden
+        """
         garden = Garden(name)
         self.gardens = self.gardens + (garden,)
         return garden
@@ -37,22 +39,23 @@ method to create a garden
                 total += 1
             return total
 
-"""
-class method that calculates the number of gardens
-class method is bound to the class 
-"""
         @classmethod
         def create_garden_network(cls):
+            """
+            class method that calculates the number of gardens
+            class method is bound to the class
+            """
             total = 0
             for g in cls.gardens:
                 total += 1
             return total
-"""
-method that calculates score for each garden
-based on the type of the flower we add some additional points 
-"prizeflower"
-"""
+
         def total_score(self):
+            """
+            method that calculates score for each garden
+            based on the type of the flower we add some additional points
+            "prizeflower"
+            """
             for g in self.gardens:
                 tot = 0
                 for p in g.plants:
@@ -66,6 +69,7 @@ based on the type of the flower we add some additional points
                 f"{self.gardens[1].name}: {self.gardens[1].score}"
             )
 
+
 class Garden:
     def __init__(self, name):
         self.name = name
@@ -76,12 +80,14 @@ class Garden:
         self.plants = self.plants + (plant,)
         if show == 1:
             print(f"Added {plant.name} to {self.name}'s garden")
-"""
-calculate how many plants we have for each category
-also perform the check for the height,
-and calculate the total plants
-"""
+
     def show_plants(self, total_growth):
+        """
+        calculate how many plants we have for each category
+        also perform the check for the height,
+        and calculate the total plants
+        """
+
         print(f"\n=== {self.name}'s Garden Report ===")
         print("Plants in garden:")
 
@@ -117,11 +123,13 @@ and calculate the total plants
             print("\nHeight validation test: True")
         else:
             print("\nHeight validation test: False")
-"""
-func to cause growth in each plant 
-and compute the total growth
-"""
+
     def grow_plants(self):
+        """
+        func to cause growth in each plant
+        and compute the total growth
+        """
+
         print(f"\n{self.name} is helping all plants grow...")
         total_growth = 0
         for plant in self.plants:

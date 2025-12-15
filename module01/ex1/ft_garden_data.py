@@ -1,15 +1,18 @@
 """
-class of plant with attributes of 
+class of plant with attributes of
 name, height and age
 """
+
 
 class Plant:
     def __init__(plant, name, height, age):
         plant.name = name
         plant.height = height
         plant.age = age
+
+
 """
-displaying the attributes of the plants 
+displaying the attributes of the plants
 we create using the plant class
 """
 
