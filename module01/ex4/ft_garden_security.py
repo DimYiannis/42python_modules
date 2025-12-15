@@ -1,3 +1,11 @@
+"""
+int this class we use name mangling
+in order to create encapsulation and access those
+attirbutes only from inside the class
+
+because of encapsulation we cant access the attributes out 
+of the class so we create methods to manipulate these attributtes
+"""
 class SecurePlant:
     def __init__(self, name, height, age):
         self.name = name
@@ -16,7 +24,11 @@ class SecurePlant:
     def get_age(self):
         return self.__age
 
-
+"""
+in this func we create a plant
+and check if the height and age are invalid calling 
+ft_check_age and ft_check_height funcs
+"""
 def ft_create(flower_name, height, age):
     p = SecurePlant(flower_name, height, age)
     print(f"Plant created: {p.name}")
@@ -24,6 +36,15 @@ def ft_create(flower_name, height, age):
     ft_check_age(p, p.get_age())
     return p
 
+"""
+we check if age-height are acceptible values:
+
+using setter and getter methods to 
+check the attributes of the plant class
+
+if age is acceptible then update 
+else dont
+"""
 
 def ft_check_age(plant, age):
     if age < 0:

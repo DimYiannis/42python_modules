@@ -1,3 +1,17 @@
+"""
+we have a class of plant with attributes:
+name, height, agee, growth
+
+a method called grow which increases 
+the height of each plant depending on their name.
+So each plant has its own behavior.
+
+and another method called age where we increase 
+its time its called the agee by one day
+"""
+
+
+
 class Plant:
     def __init__(self, name, height, agee, growth):
         self.name = name
@@ -16,7 +30,10 @@ class Plant:
     def age(self):
         self.agee += 1
 
-
+"""
+in this func we create diff plants using the plant class
+we display their attributes and return them
+"""
 def get_info():
     p1 = Plant("Rose", 25, 30, 0)
     p2 = Plant("Sunflower", 80, 45, 0)

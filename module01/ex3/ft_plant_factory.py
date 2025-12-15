@@ -16,13 +16,18 @@ class Plant:
     def age(self):
         self.agee += 1
 
-
+"""
+in this func we create a plant using the 
+plant class and display some of its attributes
+"""
 def ft_create(flower_name, height, agee, growth):
     p = Plant(flower_name, height, agee, growth)
     print(f"Created: {p.name} ({p.height}cm {p.agee} days)")
     return 1
 
-
+"""
+    count as we create new plants
+"""
 if __name__ == "__main__":
     count = 0
     print("=== Plant Factory Output ===")

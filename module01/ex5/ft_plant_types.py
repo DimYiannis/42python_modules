@@ -4,7 +4,15 @@ class Plant:
         self.height = int(height)
         self.age = int(age)
 
+"""
+inheritance:
+flower class inherits the attributes of Plant,
+we use super(). to call the constructor of the parent class
 
+bloom method:
+check whether we display a mesage based on the bloom attribute
+that works as a boolean
+"""
 class Flower(Plant):
     def __init__(self, name, height, age, color, bloom):
         super().__init__(name, height, age)
@@ -41,7 +49,10 @@ class Vegetable(Plant):
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
 
-
+"""
+funcs to create objects using the above classes
+and display their attributes
+"""
 def ft_create_flower(n, h, a, c, bloom):
     fl = Flower(n, h, a, c, bloom)
     print(f"{fl.n} ({type(fl).__name__}): {fl.h}cm, {fl.a} days, {fl.c} color")
