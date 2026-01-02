@@ -7,7 +7,7 @@ def create_water():
     return "Water element created"
 
 
-    def create_earth():
+def create_earth():
     return "Earth element created"
 
 
