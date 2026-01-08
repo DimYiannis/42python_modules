@@ -2,28 +2,26 @@ if __name__ == "__main__":
     import alchemy
     import alchemy.elements
 
-    print("=== Sacred Scroll Mastery ==\n")
+    print("\n=== Import Transmutation Mastery ==\n")
 
-    print("Testing direct module access:")
+    print("Method 1 - Full module import:")
+    import alchemy.elements 
     print("alchemy.elements.create_fire():", alchemy.elements.create_fire())
-    print("alchemy.elements.create_water():", alchemy.elements.create_water())
-    print("alchemy.elements.create_earth():", alchemy.elements.create_earth())
-    print("alchemy.elements.create_air():", alchemy.elements.create_air())
 
-    print("\nTesting package-level access (controlled by __init__.py):")
-    print("alchemy.create_fire():", alchemy.create_fire())
-    print("alchemy.create_water():", alchemy.create_water())
-    try:
-        print("alchemy.create_earth():", alchemy.create_earth())
-    except AttributeError:
-        print("alchemy.create_earth(): AttributeError - not exposed")
+    print("\nMethod 2 - Specific function import:")
+    from alchemy.elements import create_water
+    print("create_water():", create_water())
 
-    try:
-        print("alchemy.create_air():", alchemy.create_air())
-    except AttributeError:
-        print("alchemy.create_air(): AttributeError - not exposed")
+    print("\nMethod 3 - Aliased import:")
+    from alchemy.potions import healing_potion as heal
+    print("heal():", heal())
 
-    print("\nPackage metadata:")
-    print("Version:", alchemy.__version__)
-    print("Author:", alchemy.__author__)
+    print("\nMethod 4 - Multiple imports:")
+    from alchemy.elements import create_fire, create_earth
+    print("create_earth():", create_earth())
+    print("create_fire():", create_fire())
+    from alchemy.potions import strength_potion
+    print("strength_potion():", strength_potion())
 
+
+    print("\nAll import transmutation methods mastered!")
