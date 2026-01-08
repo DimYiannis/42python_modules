@@ -1,0 +1,4 @@
+
+
+def record_spell(spell_name: str, ingredients: str) -> str:
+
