@@ -1,21 +1,25 @@
+from .CreatureCard import CreatureCard
 
+if __name__ == "__main__":
 
-print("=== DataDeck Card Foundation ===")
+    print("=== DataDeck Card Foundation ===")
 
-print("\nTesting Abstract Base Class Design:")
+    fire_dragon = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
+    
+    print("\nTesting Abstract Base Class Design:")
 
-print("\nCreatureCard Info:")
-print(f"{cardinfo}")
+    print("\nCreatureCard Info:")
+    print(fire_dragon.get_card_info())
 
-print("\nPlaying Fire Dragon with 6 mana available:")
-print(f"Playable:", {true})
-print(f"Play result:", {playresult})
+    avalaible_mana = 6
+    print(f"\nPlaying Fire Dragon with {avalaible_mana} mana available:")
+    print("Playable:", fire_dragon.is_playable(avalaible_mana))
+    print("Play result:", fire_dragon.play({}))
 
-print("\nFire Dragon attacks Goblin Warrior:")
-print(f"Attack result:", { {'attacker': 'Fire Dragon', 'target': 'Goblin Warrior',
-'damage_dealt': 7, 'combat_resolved': True}})
+    print("\nFire Dragon attacks Goblin Warrior:")
+    print("Attack result:", fire_dragon.attack_target("Goblin Warrior"))
 
-print("\nTesting insufficient mana (3 available):")
-print("Playable:", {False})
+    print("\nTesting insufficient mana (3 available):")
+    print("Playable:", fire_dragon.is_playable(3))
 
-print("\nAbstract pattern successfully demonstrated!")
+    print("\nAbstract pattern successfully demonstrated!")
