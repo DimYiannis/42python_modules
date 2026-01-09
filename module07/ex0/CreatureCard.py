@@ -1,6 +1,6 @@
 from .Card import Card
 
-class CreatureCard(Card):
+class Creature(Card):
     """
         creat a card.     
     """

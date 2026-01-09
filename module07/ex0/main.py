@@ -1,10 +1,10 @@
-from .CreatureCard import CreatureCard
+from .CreatureCard import Creature
 
 if __name__ == "__main__":
 
     print("=== DataDeck Card Foundation ===")
 
-    fire_dragon = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
+    fire_dragon = Creature("Fire Dragon", 5, "Legendary", 7, 5)
     
     print("\nTesting Abstract Base Class Design:")
 
