@@ -1,7 +1,7 @@
 
 from .EliteCard import EliteCard
 
-if __name__ = "__main__"
+if __name__ == "__main__":
     print("\n=== DataDeck Ability System ===")
 
     elite = EliteCard("Arcane Warrior", 6, "Legendary", attack_power = 5)

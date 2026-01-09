@@ -2,9 +2,9 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 
-class Magical(ABC):
+class Compatable(ABC):
     """
-     abstract base class for magical abilities
+     abstract base class for combat abilities
     """
     @abstractmethod
     def attack(self, targets) -> Dict:
