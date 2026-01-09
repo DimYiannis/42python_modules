@@ -1,10 +1,10 @@
 
 from ex0.Card import Card
-from .Compatable import Compatable
+from .Combatable import Combatable
 from .Magical import Magical
 from typing import List, Dict
 
-class EliteCard(Card, Compatable, Magical):
+class EliteCard(Card, Combatable, Magical):
     """
     class that combines combat
     and magical abilities

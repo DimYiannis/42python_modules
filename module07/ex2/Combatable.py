@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 
-class Compatable(ABC):
+class Combatable(ABC):
     """
      abstract base class for combat abilities
     """
