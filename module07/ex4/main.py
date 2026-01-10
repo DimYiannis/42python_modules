@@ -15,6 +15,11 @@ if __name__ == "__main__":
 
     dragon_id = platform.register_card(fire_dragon)
     wizard_id = platform.register_card(ice_wizard)
+    
+    print("\nCreating tournament match...")
+    match_result = platform.create_match(dragon_id, wizard_id)
+    print("Match result:", match_result)
+
 
     print("\nTournament Leaderboard:")
     for entry in platform.get_leaderboard():

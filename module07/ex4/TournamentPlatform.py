@@ -7,11 +7,13 @@ class TournamentPlatform:
         matches and leaderboard
     """
     def __init__(self):
-        self.cards: Dict[str, TournamentCard] = {}
+        self.cards = {}
+        self.card_counter = 0
         self.matches_played = 0
 
     def register_card(self, card: TournamentCard) -> str:
-        card_id = card.name.lower().replace(" ", "_") + f"_{len(self.cards)+1:03d}"
+        card_id = f"{card.name.split()[0].lower()}_{self.card_counter:03d}"
+        card.card_id = card_id
         self.cards[card_id] = card
         print(f"{card.name} (ID: {card_id}):")
         print("- Interfaces: [Card, Combatable, Rankable]")
@@ -29,14 +31,14 @@ class TournamentPlatform:
             winner, loser = c2, c1
 
         winner.update_wins(1)
-        lose.update_losses(1)
+        loser.update_losses(1)
         self.matches_played += 1
 
         return {
             "winner": winner.name.lower().replace(" ", "_"),
-            "loser": losser.name.lower().replace(" ", "_"),
+            "loser": loser.name.lower().replace(" ", "_"),
             "winner_rating": winner.rating,
-            "loser_rating": losses.rating
+            "loser_rating": loser.rating
         }
 
     def get_leaderboard(self) -> List[str]:
