@@ -5,7 +5,7 @@ from .FantasyCardFactory import FantasyCardFactory
 
 if __name__ == "__main__":
     print("=== DataDeck Game Engine ===")
-    
+ 
     engine = GameEngine()
     factory = FantasyCardFactory()
     strategy = AggressiveStrategy()

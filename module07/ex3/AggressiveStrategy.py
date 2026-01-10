@@ -1,7 +1,7 @@
 from .GameStrategy import GameStrategy
 from typing import List, Dict
 
-class AggresiveStrategy(GameStrategy):
+class AggressiveStrategy(GameStrategy):
 
     def execute_turn(self, hand: List, battlefield: List) -> Dict:
         played_cards = []

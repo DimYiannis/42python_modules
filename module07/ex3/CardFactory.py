@@ -17,6 +17,7 @@ class CardFactory(ABC):
 
     @abstractmethod
     def create_artifact(self, name_or_power=None) -> Card:
+        pass
 
     @abstractmethod
     def create_themed_deck(self, size: int) -> Dict:
