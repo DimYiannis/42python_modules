@@ -8,7 +8,7 @@ import random
 class FantasyCardFactory(CardFactory):
 
     def create_creature(self, name_or_power=None):
-        return CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
+        return Creature("Fire Dragon", 5, "Legendary", 7, 5)
 
     def create_spell(self, name_or_power=None):
         return Spell("Lightning Bolt", 3, "Common", "damage")
@@ -29,6 +29,6 @@ class FantasyCardFactory(CardFactory):
     def get_supported_types(self) -> Dict:
         return {
             "creatures": ["dragon", "goblin"],
-            "spells": ["fireball", "Lightning"],
+            "spells": ["fireball"],
             "Artifacts": ["mana_ring"]
         }

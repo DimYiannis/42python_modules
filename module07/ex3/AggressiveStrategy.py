@@ -3,10 +3,11 @@ from typing import List, Dict
 
 class AggressiveStrategy(GameStrategy):
 
-    def execute_turn(self, hand: List, battlefield: List) -> Dict:
+    def execute_turn(self, hand: List, targets: List) -> Dict:
         played_cards = []
         mana_used = 0
         damage = 0
+        target = targets[0]
 
         for card in sorted(hand, key=lambda c: c.cost):
             played_cards.append(card.name)
@@ -16,7 +17,7 @@ class AggressiveStrategy(GameStrategy):
         return {
             "cards_played": played_cards,
             "mana_used": mana_used,
-            "targets_attacked": ["Enemy Player"],
+            "targets_attacked": [target],
             "damage_dealt": damage
         }
 
