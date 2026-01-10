@@ -1,6 +1,6 @@
 from ex0.Card import Card
 from ex2.Combatable import Combatable
-from Rankable import Rankable
+from .Rankable import Rankable
 
 class TournamentCard(Card, Combatable, Rankable):
     """

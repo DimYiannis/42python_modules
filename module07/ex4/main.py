@@ -1,6 +1,6 @@
 
-from TournamentCard importTournamentCard
-from TournamentPlatform import TournamentPlatform
+from .TournamentCard import TournamentCard
+from .TournamentPlatform import TournamentPlatform
 
 if __name__ == "__main__":
 

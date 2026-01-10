@@ -16,7 +16,7 @@ class Rankable(ABC):
         pass
 
     @abstractmethod
-    update_losses(self, losses: int) -> None:
+    def  update_losses(self, losses: int) -> None:
         """number of losses."""
         pass
 

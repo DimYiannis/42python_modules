@@ -1,5 +1,5 @@
 from typing import Dict, List
-from TournamentCard import TournamentCard
+from .TournamentCard import TournamentCard
 
 class TournamentPlatform:
     """
@@ -11,7 +11,7 @@ class TournamentPlatform:
         self.matches_played = 0
 
     def register_card(self, card: TournamentCard) -> str:
-        card_id = card.name.lower().replace(" ", " _") + f"_{len(self.cards)+1:03d}"
+        card_id = card.name.lower().replace(" ", "_") + f"_{len(self.cards)+1:03d}"
         self.cards[card_id] = card
         print(f"{card.name} (ID: {card_id}):")
         print("- Interfaces: [Card, Combatable, Rankable]")
