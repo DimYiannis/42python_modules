@@ -102,7 +102,7 @@ def create_visualization(df, filename='matrix_analysis.png'):
     fig.suptitle('Matrix Performance Analysis', fontsize=16, fontweight='bold')
 
     #plot1 reaction time
-    axes[0, 0].hist(df['reaction_time'], bins=30, colors='green', alpha=0.7, edgecolor='black')
+    axes[0, 0].hist(df['reaction_time'], bins=30, color='green', alpha=0.7, edgecolor='black')
     axes[0, 0].set_title('Reaction time distribution')
     axes[0, 0].set_xlabel('Reaction time in sec')
     axes[0, 0].set_ylabel('frequency')
