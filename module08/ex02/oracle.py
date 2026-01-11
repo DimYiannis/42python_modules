@@ -6,7 +6,7 @@ if __name__ == "__main__":
 
     load_dotenv()
 
-    print("ORACLE STATUS: Reading the Matrix...\n")
+    print("\nORACLE STATUS: Reading the Matrix...\n")
 
     mode = os.getenv('MATRIX_MODE', 'development')
     database_url = os.getenv('DATABASE_URL', 'sqlite:///local.db')
@@ -24,10 +24,10 @@ else:
 
 if api_key:
         print(f"  API Access: Authenticated")
-    else:
-        print(f"  API Access: No key provided")
+else:
+    print(f"  API Access: No key provided")
 
-    print(f"  Log Level: {log_level}")
+print(f"  Log Level: {log_level}")
 
 if endpoint:
     print("Zion Network: Online")
