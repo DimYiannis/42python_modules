@@ -42,13 +42,19 @@ def memory_vault() -> dict[str, callable]:
     data = {}
 
     def store(key: str, value):
-        nonlocal data
-        data["key"] = value
+        data[key] = value
 
     def recall(key: str):
-        nonlocal data
-        for item in data:
-            if data.get('key') == key
+        if data.get(key):
+            result = data.get(key)
+        else:
+            result = "Memory not found"
+        return result
+
+    return {
+        "save": store,
+        "recall": recall
+    }
 
 
 if __name__ == "__main__":
@@ -71,5 +77,12 @@ if __name__ == "__main__":
     Flaming('potion')
 
     print("\nTesting memory_vault")
+    data = memory_vault()
+    data['save']('audi', 'R8')
+    data['save']('bmw', 'M5')
+    print(data['recall']('audi'))
+    print(data['recall']('kia'))
+    print(data['recall']('bmw'))
+
 
 
