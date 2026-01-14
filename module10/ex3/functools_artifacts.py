@@ -1,4 +1,4 @@
-from functools import reduce, partial
+from functools import reduce, partial, lru_cache, singledispatch
 import operator
 
 def spell_reducer(spells: list[int], operation: str) -> int:
@@ -33,15 +33,40 @@ def partial_enchanter(base_enchantment: callable) -> dict[str, callable]:
         'ice_enchant': partial(base_enchantment, power = 50, element = "ice"),
         #prefill by position
         'lightning_enchant': partial(base_enchantment, 50, "lightning")
-
     }
-    
 
+@lru_cache(maxsize = 128)
 def memoized_fibonacci(n: int) -> int:
-    pass
-def spell_dispatcher() -> callable:
-    pass
+    """
+        using lru_cache decorator
+        to help reduce the execution time
+    """
+    if n < 2:
+        return n
+    return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
+
+def spell_dispatcher() -> callable:
+
+    @singledispatch
+    def spell(arg):
+        print("default:")
+
+    @spell.register(int)
+    def damage_spell(arg: int):
+        print(f"spell's damage is {arg}")
+
+    @spell.register(str)
+    def enchantment(arg: str):
+        print(f"spell's enchantment is {arg}")
+
+    @spell.register(list)
+    def multi_cast(arg: list):
+        print(f"items in list:", end=" ")
+        for item in arg:
+            print(item, end=", ")
+
+    return spell
 
 
 
@@ -69,3 +94,16 @@ if __name__ == "__main__":
     bro["fire_enchant"](target = "phoenix")
     bro["ice_enchant"](target ="polarbear")
     bro["lightning_enchant"]("thorrr")
+
+    print("\nTesting memoized fibonacci...")
+    n1 = 10
+    print(f"Fib({n1})", memoized_fibonacci(n1))
+    n2 = 15
+    print(f"Fib({n2})", memoized_fibonacci(n2))
+
+    print("\nTesting multi_cast...")
+    cars = ['audi', 'bmw', 'honda']
+    callme = spell_dispatcher()
+    callme(2)
+    callme("bruh")
+    callme(cars)
