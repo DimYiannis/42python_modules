@@ -21,7 +21,12 @@ def power_validator(min_power: int) -> callable:
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            if args[0] < min_power:
+            if "power" in kwargs:
+                power = kwargs["power"]
+            else:
+                power = args[-1]
+
+            if power < min_power:
                 return "Insufficient power for this spell"
             return func(*args, **kwargs)
         return wrapper
@@ -45,15 +50,21 @@ def retry_spell(max_attempts: int) -> callable:
     return decorator
 
 
-#class MageGuild:
+class MageGuild:
 
+    @staticmethod
+    def validate_mage_name(name: str) -> bool:
+        if len(name) < 3:
+            return False
 
-@staticmethod
-def validate_mage_name(name: str) -> bool:
-    pass
+        for char in name:
+            if not (char.isalpha() or char.isspace()):
+                return False
 
-def cast_spell(self, spell_name: str, power: int) -> str:
-    pass
+        return True
+    @power_validator(min_power=10)
+    def cast_spell(self, spell_name: str, power: int) -> str:
+        return f"succesfully cast {spell_name} with power {power}"
 
 # to be decorated
 def fireball():
@@ -84,3 +95,11 @@ if __name__ == "__main__":
     print("\nTesting retry_spell")
     result = unstable_spell()
     print(result)
+
+    print("\nTesting MageGuild... ")
+    check = MageGuild()
+    print(check.cast_spell("aaa", 15))
+    print(check.cast_spell("aa", 5))
+    check_power = MageGuild.cast_spell
+    print(check.cast_spell(spell_name="aha", power=100))
+    print(check.cast_spell(spell_name="ahem", power=10))
