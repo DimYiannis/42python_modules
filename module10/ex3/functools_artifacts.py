@@ -1,5 +1,6 @@
 from functools import reduce, partial, lru_cache, singledispatch
 import operator
+import time
 
 def spell_reducer(spells: list[int], operation: str) -> int:
     """
@@ -46,6 +47,7 @@ def memoized_fibonacci(n: int) -> int:
     return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
 
+
 def spell_dispatcher() -> callable:
 
     @singledispatch
@@ -79,6 +81,13 @@ def base_enchantment(power, element, target):
     print(f" weapon {target} with power {power} and elemnt type {element}")
     return result
 
+
+def fib_without_cache(n):
+    if n < 2:
+        return n
+    return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
+
+
 if __name__ == "__main__":
 
     spells =  [4 , 6, 8, 9, 856, 10, 3, 1, 2]
@@ -96,10 +105,31 @@ if __name__ == "__main__":
     bro["lightning_enchant"]("thorrr")
 
     print("\nTesting memoized fibonacci...")
+
     n1 = 10
+
+    begin = time.time()
     print(f"Fib({n1})", memoized_fibonacci(n1))
+    end = time.time()
+    print("Time taken to execute the function with lru_cache is", end-begin)
+
+    begin = time.time()
+    print(f"Fib({n1})", fib_without_cache(n1))
+    end =time.time()
+    print("Time taken to execute the function without lru_cache is", end-begin)
+
     n2 = 15
+
+    begin = time.time()
     print(f"Fib({n2})", memoized_fibonacci(n2))
+    end = time.time()
+    print("Time taken to execute the function with lru_cache is", end-begin)
+
+    begin = time.time()
+    print(f"Fib({n2})", fib_without_cache(n2))
+    end = time.time()
+    print("Time taken to execute the function without lru_cache is", end-begin)
+
 
     print("\nTesting multi_cast...")
     cars = ['audi', 'bmw', 'honda']
