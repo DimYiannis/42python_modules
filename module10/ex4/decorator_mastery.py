@@ -3,28 +3,46 @@ from functools import wraps
 
 def spell_timer(func: callable) -> callable:
 
-
-    #before execution
-    print("Casting function_name...")
-
     @wraps(func)
     def wrapper(*args, **kwargs):
+
+        print(f"Casting {func.__name__}...")
+
         begin = time.time()
         result = func(*args, **kwargs)
         end = time.time()
 
-        #after execution
-        print(f"Spell completed in {end - begin} seconds")
+        print(f"Spell completed in {end - begin:.6f} seconds")
         return result
  
     return wrapper
 
 def power_validator(min_power: int) -> callable:
-    pass
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if args[0] < min_power:
+                return "Insufficient power for this spell"
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 
 def retry_spell(max_attempts: int) -> callable:
-    pass
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            counter = 1
+            while counter <= max_attempts:
+                try:
+                    return func(*args, **kwargs)
+                except Exception:
+                    if counter < max_attempts:
+                        print(f"spell failed, retrying... (attempt {counter}/{max_attempts})")
+                    counter += 1
+            return f"spell casting failed after {max_attempts} attempts"
+        return wrapper
+    return decorator
 
 
 #class MageGuild:
@@ -37,12 +55,32 @@ def validate_mage_name(name: str) -> bool:
 def cast_spell(self, spell_name: str, power: int) -> str:
     pass
 
+# to be decorated
+def fireball():
+    print("Fireball cast!")
 
-def func():  
-    print("Inside function!")
+@power_validator(50)
+def cast_spell(power):
+    return f"spell cast with power {power}"
+
+@retry_spell(3)
+def unstable_spell():
+    raise ValueError("spell fizzled!")
+
+
 
 if __name__ == "__main__":
-    func = spell_timer(func)
 
-    val = func()
+    print("\nTesting spell timer...")
+    fireball = spell_timer(fireball)
+
+    val = fireball()
     print(val)
+
+    print("\nTesting power validator")
+    print(cast_spell(30))
+    print(cast_spell(70))
+
+    print("\nTesting retry_spell")
+    result = unstable_spell()
+    print(result)
