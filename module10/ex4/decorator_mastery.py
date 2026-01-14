@@ -14,7 +14,7 @@ def spell_timer(func: callable) -> callable:
         end = time.time()
 
         #after execution
-        print("Spell completed in time seconds")
+        print(f"Spell completed in {end - begin} seconds")
         return result
  
     return wrapper
@@ -27,7 +27,7 @@ def retry_spell(max_attempts: int) -> callable:
     pass
 
 
-class MageGuild:
+#class MageGuild:
 
 
 @staticmethod
@@ -36,3 +36,13 @@ def validate_mage_name(name: str) -> bool:
 
 def cast_spell(self, spell_name: str, power: int) -> str:
     pass
+
+
+def func():  
+    print("Inside function!")
+
+if __name__ == "__main__":
+    func = spell_timer(func)
+
+    val = func()
+    print(val)
