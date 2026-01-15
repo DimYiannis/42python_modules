@@ -1,8 +1,12 @@
 import sys
 import math
-
+#import pdb
 
 def create_pos(x, y, z):
+    """
+        add coordinates and catch valueerror
+        if the input is invalid
+    """
     coord = ()
     try:
         x = int(x)
@@ -14,6 +18,23 @@ def create_pos(x, y, z):
         print(f"Parsing invalid coordinates: {x},{y},{z}")
         print(f"Error parsing coordinates: {e}")
         print(f"Error details - Type: {type(e).__name__}, Args: {e.args}\n")
+        return None
+
+
+def parse_coordinates(argv):
+    """
+        parse either a string or many args
+    """
+    if len(argv) == 2:
+        try:
+            return argv[1].split(",")
+        except ValueError:
+            return None
+
+    elif len(argv) == 4:
+        return argv[1], argv[2], argv[3]
+
+    else:
         return None
 
 
@@ -34,18 +55,26 @@ if __name__ == "__main__":
     print(f"Distance between (0, 0, 0) and ({coord}): {res}\n")
     res = float(res)
 
-    new_coord_str = sys.argv[1]
-    x2, y2, z2 = new_coord_str.split(",")
-    new_coord = create_pos(x2, y2, z2)
-    res = math.sqrt((int(x2) - x1)**2 + (int(y2) - y1)**2 + (int(z2) - z1)**2)
-    res = float(res)
+    if len(sys.argv) < 2:
+        print("Insert some arguments")
+    else:
+        #pdb.set_trace()
+        x2, y2, z2 = parse_coordinates(sys.argv)
+        new_coord = create_pos(x2, y2, z2)
+        if new_coord == None:
+            pass
+        else:
+            res = math.sqrt((int(x2) - x1)**2 +
+                        (int(y2) - y1)**2 + (int(z2) - z1)**2)
+            res = float(res)
 
-    print(f"Parsing coordinates: {sys.argv[1]}")
-    print(f"Parsed position: ({x2}, {y2}, {z2})")
-    print(f"Distance between (0, 0, 0) and ({new_coord_str}): {res}\n")
+            print(f"Parsing coordinates: {sys.argv[1]}")
+            print(f"Parsed position: ({x2}, {y2}, {z2})")
+            print(f"Distance between (0, 0, 0) and ({x2}, {y2}, {z2}): {res}\n")
 
-    last_coord = create_pos("abc", "def", "ghi")
+            last_coord = create_pos("abc", "def", "ghi")
 
-    print("Unpacking demonstration:")
-    print(f"Player at x={x2}, y={y2}, z={z2}")
-    print(f"Coordinates: X={x2}, Y={y2}, Z={z2}")
+            print("Unpacking demonstration:")
+            print(f"Player at x={x2}, y={y2}, z={z2}")
+            print(f"Coordinates: X={x2}, Y={y2}, Z={z2}")
+
