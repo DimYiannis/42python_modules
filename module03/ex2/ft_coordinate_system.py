@@ -27,10 +27,11 @@ def parse_coordinates(argv):
     """
     if len(argv) == 2:
         try:
-            if i in argv == ',':
-                return argv[1].split(",")
-            else:
-                return argv[1].split(" ")
+            for i in argv:
+                if i == ',':
+                    return argv[1].split(",")
+                else:
+                    return argv[1].split(" ")
         except ValueError:
             return None
 
