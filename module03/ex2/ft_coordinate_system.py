@@ -1,6 +1,6 @@
 import sys
 import math
-#import pdb
+import pdb
 
 def create_pos(x, y, z):
     """
@@ -27,7 +27,10 @@ def parse_coordinates(argv):
     """
     if len(argv) == 2:
         try:
-            return argv[1].split(",")
+            if i in argv == ',':
+                return argv[1].split(",")
+            else:
+                return argv[1].split(" ")
         except ValueError:
             return None
 
