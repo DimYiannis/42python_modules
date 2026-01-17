@@ -25,6 +25,7 @@ class NumericProcessor(DataProcessor):
     """
      - Processor for handling numeric data (lists of numbers).
      - Validate that input is a list containing only integers or floats
+     - runtime data validation
      - calculate  statistics
     """
     def __init__(self) -> None:
@@ -38,9 +39,18 @@ class NumericProcessor(DataProcessor):
             return "Alert! Data not valid"
 
     def validate(self, data: Any) -> bool:
-        return isinstance(data, list) and all(
-            isinstance(x, (int, float)) for x in data
-        )
+        """
+            _ is just a throwaway variable — Python convention: 
+            _ means “I don’t care about the value”
+
+        """
+        try:
+            for x in data:
+                _ = x + 0
+            return True
+        except:
+            return False
+
 
     def format_output(self, result: str) -> str:
         num = len(self.data)
@@ -64,7 +74,13 @@ class TextProcessor(DataProcessor):
             return "Alert! Text not valid"
 
     def validate(self, data: Any) -> bool:
-        return isinstance(data, str)
+        try:
+            for x in data:
+                _ = x + ""
+            return True
+        except:
+            return False
+
 
     def format_output(self, result: str) -> str:
         num = len(self.data)
@@ -93,7 +109,12 @@ class LogProcessor(DataProcessor):
             return "Alert! Log input not valid"
 
     def validate(self, data: Any) -> bool:
-        return isinstance(data, str)
+        try:
+            for x in data:
+                _ = x + ""
+            return True
+        except:
+            return False
 
     def format_output(self, result: str) -> str:
         """
@@ -111,25 +132,36 @@ class LogProcessor(DataProcessor):
 
 
 if __name__ == "__main__":
+    
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===")
     print("\nInitializing Numeric Processor...")
-    data = [1, 2, 3, 4, 5]
+
+    data = [1, 2, 3, "a", 5]
     num_pro = NumericProcessor()
+
     print(f"Processing data: {data}")
-    print(f"{num_pro.process(data)}")
-    print(f"{num_pro.format_output('')}")
+    result = num_pro.validate(data) #returns error datanot valid
+    if result is False:
+        print(num_pro.process(data))
+    else:
+        print(num_pro.process(data))
+        print(f"{num_pro.process(data)}") 
+        print(f"{num_pro.format_output('')}")
+
     print("\nInitializing Text Processor...")
     data = "Hello Nexus World"
     txt_pro = TextProcessor()
     print(f"Processing data: {data}")
     print(f"{txt_pro.process(data)}")
     print(f"{txt_pro.format_output('')}")
+    
     print("\nInitializing Log Processor...")
     data = "ERROR: Connection timeout"
     log_pro = LogProcessor()
     print(f"Processing data: {data}")
     print(f"{log_pro.process(data)}")
     print(f"{log_pro.format_output('')}")
+    
     print("\n=== Polymorphic Processing Demo ===")
     print("Processing multiple data types through same interface...")
     processors = [
