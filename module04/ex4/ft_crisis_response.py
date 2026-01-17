@@ -1,4 +1,4 @@
-def crisis_handler(filename, is_ok=False):
+def crisis_handler(filename: str, is_ok: bool) -> None:
     """
     - Handle archive access during routine operations or crisis situations.
     - open and read file and report whether access is ok or
@@ -30,7 +30,7 @@ def crisis_handler(filename, is_ok=False):
 if __name__ == "__main__":
     print("=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===\n")
 
-    crisis_handler("lost_archive.txt")
-    crisis_handler("classified_vault.txt")
-    crisis_handler("standard_archive.txt", is_ok=True)
+    crisis_handler("../lost_archive.txt",  is_ok=False)
+    crisis_handler("../classified_vault.txt",  is_ok=False)
+    crisis_handler("../standard_archive.txt", is_ok=True)
     print("All crisis scenarios handled successfully. Archives secure.")
