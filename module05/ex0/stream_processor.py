@@ -4,10 +4,15 @@ from typing import Any
 
 class DataProcessor(ABC):
     """
-     - Abstract base class for data processing
-     - parent class for all data processors
-     - enabling polymorphic behavior across different data types.
+        - Abstract base class for data processing
+        - parent class for all data processors
+        - enabling polymorphic behavior across different data types.
     """
+    # abstract methods are methods that are defined
+    # in an abstract class but do not have an implementation.
+    # They serve as a blueprint for the subclasses, ensuring
+    # that they provide their own implementation.
+
     @abstractmethod
     def process(self, data: Any) -> str:
         pass
@@ -15,7 +20,7 @@ class DataProcessor(ABC):
     @abstractmethod
     def validate(self, data: Any) -> bool:
         pass
-  
+
     def format_output(self, result: str) -> str:
         result = "Data_Processed result: " + result
         return result
@@ -93,9 +98,9 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     """
-     - handle log entries.
-     - Validate input is a string
-     - parse and format log entries
+        - handle log entries.
+        - Validate input is a string
+        - parse and format log entries
         based on their severity level
     """
     def __init__(self) -> None:
@@ -118,7 +123,7 @@ class LogProcessor(DataProcessor):
 
     def format_output(self, result: str) -> str:
         """
-         - format output based on log severity level     
+         - format output based on log severity level
          - parse the log entry to detect severity level (ERROR, INFO)
          - format the output with appropriate tags and extracted message.
         """
@@ -154,16 +159,18 @@ if __name__ == "__main__":
     print(f"Processing data: {data}")
     print(f"{txt_pro.process(data)}")
     print(f"{txt_pro.format_output('')}")
-    
+
     print("\nInitializing Log Processor...")
-    data = "ERROR: Connection timeout"
+    data = "INFO: Connection timeout"
     log_pro = LogProcessor()
     print(f"Processing data: {data}")
     print(f"{log_pro.process(data)}")
     print(f"{log_pro.format_output('')}")
-    
+
+
     print("\n=== Polymorphic Processing Demo ===")
     print("Processing multiple data types through same interface...")
+    '''
     processors = [
         NumericProcessor(),
         TextProcessor(),
@@ -180,4 +187,24 @@ if __name__ == "__main__":
         processor.process(data)
         print(f"Result {i}: {processor.format_output('')}")
         i += 1
+'''
+    datasets = [
+        [1, 2, 3],
+        "Hello Nexus",
+        "INFO: System ready"
+    ]
+    i = 1
+    for data in datasets:
+        if num_pro.validate(data) is True:
+             print(num_pro.process(data))
+             print(f"Result {i}: {num_pro.format_output('')}")
+        else:
+            if data[:4] == "INFO":
+                print(f"Result {i}: {log_pro.format_output('')}")
+            elif data[:5] == "ERROR":
+                print(f"Result {i}: {log_pro.format_output('')}")
+            else:
+                 print(f"Result {i}: {txt_pro.format_output('')}")
+        i += 1
+
     print("\nFoundation systems online. Nexus ready for advanced streams.")
