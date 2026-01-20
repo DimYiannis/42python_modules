@@ -137,7 +137,7 @@ class LogProcessor(DataProcessor):
 
 
 if __name__ == "__main__":
-    
+
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===")
     print("\nInitializing Numeric Processor...")
 
@@ -195,16 +195,21 @@ if __name__ == "__main__":
     ]
     i = 1
     for data in datasets:
-        if num_pro.validate(data) is True:
-             print(num_pro.process(data))
-             print(f"Result {i}: {num_pro.format_output('')}")
+        if num_pro.validate(data) is False and txt_pro.validate(data) is False:
+            print(num_pro.process(data))
+        elif num_pro.validate(data) is True:
+            num_pro.process(data)
+            print(f"Result {i}: {num_pro.format_output('')}")
         else:
             if data[:4] == "INFO":
+                log_pro.process(data)
                 print(f"Result {i}: {log_pro.format_output('')}")
             elif data[:5] == "ERROR":
+                log_pro.process(data)
                 print(f"Result {i}: {log_pro.format_output('')}")
             else:
-                 print(f"Result {i}: {txt_pro.format_output('')}")
+                txt_pro.process(data)
+                print(f"Result {i}: {txt_pro.format_output('')}")
         i += 1
 
     print("\nFoundation systems online. Nexus ready for advanced streams.")
