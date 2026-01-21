@@ -82,6 +82,7 @@ class TransactionStream(DataStream):
                     net_flow += buy - sell
                     self.data.append(tx)
                     processed_count += 1
+            print(f"Processing transaction batch: {list(data_batch)}")
             return f"Transaction analysis: {processed_count} operations, net flow: {net_flow} units"
         except Exception as e:
             return f"[{self.stream_id}] Error processing transaction batch: {e}"
@@ -113,6 +114,7 @@ class EventStream(DataStream):
                     if ev.lower() == "error":
                         error_count += 1
             message = "Event analysis:"
+            print(f"Processing event batch: {data_batch}")
             return f"{message}: {processed_count} events, {error_count} error(s) detected"
         except Exception as e:
             return f"[{self.stream_id}] Error processing event batch: {e}"
@@ -172,7 +174,10 @@ if __name__ == "__main__":
     sensor_stream.process_batch(sensor_batch)
 
     tx_stream = TransactionStream("TRANS_001")
+    tx_stream.process_batch(transaction_batch)
+
     event_stream = EventStream("EVENT_001")
+    event_stream.process_batch(event_batch)
 
     # Register streams
     processor = StreamProcessor()
@@ -191,7 +196,6 @@ if __name__ == "__main__":
     filtered_transactions = tx_stream.filter_data(transaction_batch, "critical_transaction")
     print("Filtered sensor readings:", filtered_sensors)
     print("Filtered transactions:", filtered_transactions)
-    print("") 
 
     print("\nAll streams processed successfully. Nexus throughput optimal.")
 
