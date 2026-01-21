@@ -188,6 +188,12 @@ if __name__ == "__main__":
         print(f"Result {i}: {processor.format_output('')}")
         i += 1
 '''
+    processors = [
+        NumericProcessor(),
+        TextProcessor(),
+        LogProcessor()
+    ]
+
     datasets = [
         [1, 2, 3],
         "Hello Nexus",
@@ -195,21 +201,21 @@ if __name__ == "__main__":
     ]
     i = 1
     for data in datasets:
-        if num_pro.validate(data) is False and txt_pro.validate(data) is False:
-            print(num_pro.process(data))
-        elif num_pro.validate(data) is True:
-            num_pro.process(data)
-            print(f"Result {i}: {num_pro.format_output('')}")
+        if processors[0].validate(data) is False and processors[1].validate(data) is False:
+            print(processors[0].process(data))
+        elif processors[0].validate(data) is True:
+            processors[0].process(data)
+            print(f"Result {i}: {processors[0].format_output('')}")
         else:
             if data[:4] == "INFO":
-                log_pro.process(data)
-                print(f"Result {i}: {log_pro.format_output('')}")
+                processors[2].process(data)
+                print(f"Result {i}: {processors[2].format_output('')}")
             elif data[:5] == "ERROR":
-                log_pro.process(data)
-                print(f"Result {i}: {log_pro.format_output('')}")
+                processors[2].process(data)
+                print(f"Result {i}: {processors[2].format_output('')}")
             else:
-                txt_pro.process(data)
-                print(f"Result {i}: {txt_pro.format_output('')}")
+                processors[1].process(data)
+                print(f"Result {i}: {processors[1].format_output('')}")
         i += 1
 
     print("\nFoundation systems online. Nexus ready for advanced streams.")
