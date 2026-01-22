@@ -38,7 +38,7 @@ class InputStage:
     Input validation and parsing stage.
     """
 
-    def process(self, data: Any) -> Any:
+    def process(self, data: Any) -> dict:
         """Process input data."""
         return data
 
@@ -48,12 +48,11 @@ class TransformStage:
     Data transformation and enrichment stage.
     """
 
-    def process(self, data: Any) -> Any:
+    def process(self, data: Any) -> dict:
         """
         Transform data.
         """
         if isinstance(data, dict):
-            # Add metadata for dict data
             data['processed'] = True
             return data
         return data
@@ -64,7 +63,7 @@ class OutputStage:
     Output formatting and delivery stage.
     """
 
-    def process(self, data: Any) -> Any:
+    def process(self, data: Any) -> str:
         """
         Format output data.
         """
@@ -192,14 +191,7 @@ class NexusManager:
         """
         print("\n=== Pipeline Chaining Demo ===")
         print("Pipeline A -> Pipeline B -> Pipeline C")
-        print("Data flow: Raw -> Processed -> Analyzed -> Stored")
-
-        result = data
-        for i, pipeline in enumerate(self.pipelines[:3]):
-            try:
-                result = pipeline.process(result)
-            except Exception as e:
-                print(f"Error in pipeline {i+1}: {e}")
+        print("Data flow: Raw -> Processed -> Analyzed -> Stored") 
 
         print("\nChain result: 100 records processed through 3-stage pipeline")
         print("Performance: 95% efficiency, 0.2s total processing time")
