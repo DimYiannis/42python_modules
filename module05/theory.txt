@@ -1,0 +1,55 @@
+
+
+How does method overriding enable the same processing interface to
+handle completely different data types? What makes this approach
+more powerful than separate processing functions?
+
+-> Method overriding is better than separate functions 
+because it enables polymorphism, reduces coupling,
+and allows new behavior to be added without changing existing code
+
+Coupling = how much changing one thing forces you to change something else
+
+-High coupling → many dependencies → fragile code
+-Low coupling → few dependencies → flexible code
+
+Method overriding:
+
+-Enables runtime selection of behavior
+-Allows one interface to support many data types
+-Decouples callers from implementations
+
+This is more powerful than separate functions because it:
+
+-Scales better
+-Reduces coupling
+-Eliminates type-based conditionals
+-Follows solid OOP principles
+
+-Protocol is structural typing (also called "duck typing"). It means: 
+"If it looks like a duck and quacks like a duck, it's a duck."
+
+-Duck typing lets you rely on the presence of a method instead of inheriting from a specific class.
+
+When duck typing is ideal
+
+-Simple, behavior-based interfaces
+
+-Plugins, callbacks, adapters
+
+-Rapid development
+
+
+Subtype polymorphism (also called inclusion polymorphism) means:
+
+A subclass object can be used wherever a superclass object is expected, and its overridden methods will be called.
+
+Core idea
+
+A base type defines an interface
+
+Subtypes (subclasses) provide different implementations
+
+The program works with the base type, not the concrete subtype
+
+No—subtype polymorphism relies on inheritance, while duck typing achieves polymorphism without inheritance by relying on method presence.
