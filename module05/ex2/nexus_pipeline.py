@@ -209,16 +209,13 @@ class NexusManager:
         result = data
         for i, pipeline in enumerate(self.pipelines, start=1):
             try:
-                print(f"\n[pipeline {i}: {pipeline.__class__.__name__}] Processing...") 
+                print(f"\n[pipeline {i}: {pipeline.pipeline_id}] Processing...") 
                 print(" -> ".join([p.__class__.__name__ for p in self.pipelines]))
                 print("Data flow: ", end="")
                 print(f"Raw: {data}")
                 output = pipeline.process(result)
-                print(f"Processed: {output}")
-
             except Exception as e:
-                print(f"Error in pipeline {i} ({pipeline.__class__.__name__}): {e}")
-                return None
+                print(f"Error in pipeline {i} ({pipeline.pipeline_id}): {e}")
 
         print("\nChain result: 100 records processed through 3-stage pipeline")
         print("Performance: 95% efficiency, 0.2s total processing time")
@@ -266,8 +263,7 @@ if __name__ == "__main__":
     stream_data = [22.1, 23.0, 21.5, 22.8, 21.1]
     manager.process_with_pipeline(stream_pipeline, stream_data)
 
-    raw_data = {"sensor": "temp", "value": 23.5, "unit": "C"}
-    manager.chain_pipelines(stream_data)
+    manager.chain_pipelines(json_data)
 
     print("\n=== Error Recovery Test ===")
     print("Simulating pipeline failure...")
