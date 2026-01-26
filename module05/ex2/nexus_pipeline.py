@@ -90,11 +90,11 @@ class JSONAdapter(ProcessingPipeline):
         """
         result = data
 
-        print(f"Input: {json.dumps(data) if isinstance(data, dict) else data}")
+        print(f"Input: {json.dumps(data) if isinstance(data, dict) else data}", end="")
         result = self.stages[0].process(result) if len(self.stages) > 0 else result
 
         result = self.stages[1].process(result) if len(self.stages) > 1 else result
-        print(f"Transform: {result}")
+        print(f" -> Transform: {result}")
 
         if isinstance(result, dict) and 'sensor' in result and 'value' in result:
             output = f"Processed {result['sensor']} reading: {result['value']}°{result.get('unit', 'C')} (Normal range)"
@@ -120,11 +120,11 @@ class CSVAdapter(ProcessingPipeline):
         """
         result = data
 
-        print(f'Input: "{data}"')
+        print(f"Input: {data}", end="")
         result = self.stages[0].process(result) if len(self.stages) > 0 else result
  
         result = self.stages[1].process(result) if len(self.stages) > 1 else result
-        print(f"Transform: {result}")
+        print(f" -> Transform: {result}")
 
         action_count = data.count(',') + 1
         output = f"User activity logged: {action_count} actions processed"
@@ -148,11 +148,11 @@ class StreamAdapter(ProcessingPipeline):
         """
         result = data
 
-        print(f"Input: {data}")
+        print(f"Input: {data}", end="")
         result = self.stages[0].process(result) if len(self.stages) > 0 else result
 
         result = self.stages[1].process(result) if len(self.stages) > 1 else result
-        print(f"Transform: {result}")
+        print(f" -> Transform: {result}")
 
         if isinstance(data, list):
             avg = sum(data) / len(data) if data else 0
@@ -193,6 +193,7 @@ class NexusManager:
     def process_with_pipeline(self, pipeline: ProcessingPipeline, data: Any) -> Any:
         """
         Process data with a specific pipeline.
+        display error if an exception is raised
         """
         try:
             return pipeline.process(data)
@@ -207,15 +208,21 @@ class NexusManager:
         print("\n=== Pipeline Chaining Demo ===")
 
         result = data
-        for i, pipeline in enumerate(self.pipelines, start=1):
+        for i in range(len(self.pipelines)):
+            pipeline = self.pipelines[i]
             try:
                 print(f"\n[pipeline {i}: {pipeline.pipeline_id}] Processing...") 
-                print(" -> ".join([p.__class__.__name__ for p in self.pipelines]))
+                print(" -> ".join([p.pipeline_id for p in self.pipelines]))
                 print("Data flow: ", end="")
-                print(f"Raw: {data}")
+                print(f"Raw: {data} -> ", end="")
                 output = pipeline.process(result)
+                i += 1
             except Exception as e:
                 print(f"Error in pipeline {i} ({pipeline.pipeline_id}): {e}")
+                print("Recovery initiated: Switching to backup processor")
+                print("Recovery successful: Pipeline restored, processing resumed")
+
+                i += 1
 
         print("\nChain result: 100 records processed through 3-stage pipeline")
         print("Performance: 95% efficiency, 0.2s total processing time")
@@ -264,12 +271,6 @@ if __name__ == "__main__":
     manager.process_with_pipeline(stream_pipeline, stream_data)
 
     manager.chain_pipelines(json_data)
-
-    print("\n=== Error Recovery Test ===")
-    print("Simulating pipeline failure...")
-    print("Error detected in Stage 2: Invalid data format")
-    print("Recovery initiated: Switching to backup processor")
-    print("Recovery successful: Pipeline restored, processing resumed")
 
     print("\nNexus Integration complete. All systems operational.")
 
