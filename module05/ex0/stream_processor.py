@@ -4,10 +4,11 @@ from typing import Any
 
 class DataProcessor(ABC):
     """
-        - Abstract base class for data processing
-        - parent class for all data processors
-        - enabling polymorphic behavior across different data types.
+    - Abstract base class for data processing
+    - parent class for all data processors
+    - enabling polymorphic behavior across different data types.
     """
+
     # abstract methods are methods that are defined
     # in an abstract class but do not have an implementation.
     # They serve as a blueprint for the subclasses, ensuring
@@ -16,7 +17,7 @@ class DataProcessor(ABC):
     @abstractmethod
     def process(self, data: Any) -> str:
         pass
- 
+
     @abstractmethod
     def validate(self, data: Any) -> bool:
         pass
@@ -28,11 +29,12 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
     """
-     - Processor for handling numeric data (lists of numbers).
-     - Validate that input is a list containing only integers or floats
-     - runtime data validation
-     - calculate  statistics
+    - Processor for handling numeric data (lists of numbers).
+    - Validate that input is a list containing only integers or floats
+    - runtime data validation
+    - calculate  statistics
     """
+
     def __init__(self) -> None:
         self.data = []
 
@@ -45,17 +47,16 @@ class NumericProcessor(DataProcessor):
 
     def validate(self, data: Any) -> bool:
         """
-            _ is just a throwaway variable — Python convention: 
-            _ means “I don’t care about the value”
+        _ is just a throwaway variable — Python convention:
+        _ means “I don’t care about the value”
 
         """
         try:
             for x in data:
                 _ = x + 0
             return True
-        except:
+        except TypeError:
             return False
-
 
     def format_output(self, result: str) -> str:
         num = len(self.data)
@@ -83,9 +84,8 @@ class TextProcessor(DataProcessor):
             for x in data:
                 _ = x + ""
             return True
-        except:
+        except TypeError:
             return False
-
 
     def format_output(self, result: str) -> str:
         num = len(self.data)
@@ -98,11 +98,12 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     """
-        - handle log entries.
-        - Validate input is a string
-        - parse and format log entries
-        based on their severity level
+    - handle log entries.
+    - Validate input is a string
+    - parse and format log entries
+    based on their severity level
     """
+
     def __init__(self) -> None:
         self.data = ""
 
@@ -118,14 +119,14 @@ class LogProcessor(DataProcessor):
             for x in data:
                 _ = x + ""
             return True
-        except:
+        except TypeError:
             return False
 
     def format_output(self, result: str) -> str:
         """
-         - format output based on log severity level
-         - parse the log entry to detect severity level (ERROR, INFO)
-         - format the output with appropriate tags and extracted message.
+        - format output based on log severity level
+        - parse the log entry to detect severity level (ERROR, INFO)
+        - format the output with appropriate tags and extracted message.
         """
         if self.data[:5] == "ERROR":
             result = "Output: [ALERT] ERROR level detected: " + self.data[7:]
@@ -145,12 +146,12 @@ if __name__ == "__main__":
     num_pro = NumericProcessor()
 
     print(f"Processing data: {data}")
-    result = num_pro.validate(data) #returns error datanot valid
+    result = num_pro.validate(data)  # returns error datanot valid
     if result is False:
         print(num_pro.process(data))
     else:
         print(num_pro.process(data))
-        print(f"{num_pro.process(data)}") 
+        print(f"{num_pro.process(data)}")
         print(f"{num_pro.format_output('')}")
 
     print("\nInitializing Text Processor...")
@@ -167,10 +168,9 @@ if __name__ == "__main__":
     print(f"{log_pro.process(data)}")
     print(f"{log_pro.format_output('')}")
 
-
     print("\n=== Polymorphic Processing Demo ===")
     print("Processing multiple data types through same interface...")
-    '''
+    """
     processors = [
         NumericProcessor(),
         TextProcessor(),
@@ -187,21 +187,16 @@ if __name__ == "__main__":
         processor.process(data)
         print(f"Result {i}: {processor.format_output('')}")
         i += 1
-'''
-    processors = [
-        NumericProcessor(),
-        TextProcessor(),
-        LogProcessor()
-    ]
+"""
+    processors = [NumericProcessor(), TextProcessor(), LogProcessor()]
 
-    datasets = [
-        [1, 2, 3],
-        "Hello Nexus",
-        "INFO: System ready"
-    ]
+    datasets = [[1, 2, 3], "Hello Nexus", "INFO: System ready"]
     i = 1
     for data in datasets:
-        if processors[0].validate(data) is False and processors[1].validate(data) is False:
+        if (
+            processors[0].validate(data) is False
+            and processors[1].validate(data) is False
+        ):
             print(processors[0].process(data))
         elif processors[0].validate(data) is True:
             processors[0].process(data)
