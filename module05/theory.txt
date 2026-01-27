@@ -1,4 +1,4 @@
-
+Polymorphism in Python is the idea that different objects can respond to the same method or operation in their own way. Same name, different behavior. Python is very good at this because it’s dynamically typed
 
 How does method overriding enable the same processing interface to
 handle completely different data types? What makes this approach
@@ -53,3 +53,13 @@ Subtypes (subclasses) provide different implementations
 The program works with the base type, not the concrete subtype
 
 No—subtype polymorphism relies on inheritance, while duck typing achieves polymorphism without inheritance by relying on method presence.
+
+1. Method Overloading
+
+Definition:
+Method overloading means defining multiple methods with the same name but different parameters.
+
+2. Method Overriding
+
+Definition:
+Method overriding means a child class provides its own implementation of a method defined in a parent class.

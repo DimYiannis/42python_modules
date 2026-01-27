@@ -34,6 +34,9 @@ class TransformStage:
         if isinstance(data, dict):
             result = data
         elif isinstance(data, str):
+            data = data.split(',')
+            for i in range(len(data)):
+                data[i] = data[i].capitalize()
             result = {"raw": data}
         elif isinstance(data, list):
             result = {"values": data}
@@ -318,6 +321,6 @@ if __name__ == "__main__":
     stream_data = [22.1, 23.0, 21.5, 22.8, 21.1]
     manager.process_with_pipeline(stream_pipeline, stream_data)
 
-    manager.chain_pipelines(json_data)
+    manager.chain_pipelines(csv_data)
 
     print("\nNexus Integration complete. All systems operational.")
