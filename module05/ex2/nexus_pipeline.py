@@ -102,14 +102,22 @@ class JSONAdapter(ProcessingPipeline):
                     pass
                 elif i == 2:
                     print(f" -> Transform: {result}")
-            except Exception as e:
+            except Exception:
                 self.failed_stage = i + 1
                 raise
 
-        if isinstance(result, dict) and "sensor" in result and "value" in result:
-            output = f"Processed {result['sensor']} reading: {result['value']}°{result.get('unit', 'C')} (Normal range)"
+        if (
+            isinstance(result, dict)
+            and "sensor" in result
+            and "value" in result
+        ):
+            output = (
+                f"Processed {result['sensor']}"
+                f"reading: {result['value']}°{result.get('unit', 'C')}"
+                f"(Normal range)"
+            )
         else:
-            output = f"Processed JSON data"
+            output = "Processed JSON data"
         print(f"Output: {output}")
 
         return output
@@ -140,7 +148,7 @@ class CSVAdapter(ProcessingPipeline):
                     pass
                 elif i == 2:
                     print(f" -> Transform: {result}")
-            except Exception as e:
+            except Exception:
                 self.failed_stage = i + 1
                 raise
 
@@ -175,7 +183,7 @@ class StreamAdapter(ProcessingPipeline):
                     pass
                 elif i == 2:
                     print(f" -> Transform: {result}")
-            except Exception as e:
+            except Exception:
                 self.failed_stage = i + 1
                 raise
 
@@ -197,7 +205,10 @@ class TxtAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> str:
         result = data
-        result = self.stages[0].process(result) if len(self.stages) > 0 else result
+        result = (
+        self.stages[0].process(result)
+        if len(self.stages) > 0 else result
+        )
 """
 
 
@@ -217,7 +228,9 @@ class NexusManager:
         """
         self.pipelines.append(pipeline)
 
-    def process_with_pipeline(self, pipeline: ProcessingPipeline, data: Any) -> Any:
+    def process_with_pipeline(
+            self, pipeline: ProcessingPipeline, data: Any
+            ) -> Any:
         """
         Process data with a specific pipeline.
         display error if an exception is raised
@@ -241,16 +254,19 @@ class NexusManager:
         for i in range(len(self.pipelines)):
             pipeline = self.pipelines[i]
             try:
-                print(f"\n[pipeline {i}: {pipeline.pipeline_id}] Processing...")
+                print(f"\n[pipeline {i}: {pipeline.pipeline_id}]"
+                      "Processing...")
                 print(" -> ".join([p.pipeline_id for p in self.pipelines]))
                 print("Data flow: ", end="")
                 print(f"Raw: {data} -> ", end="")
                 pipeline.process(result)
                 i += 1
             except Exception as e:
-                print(f"Error in pipeline {i + 1} ({pipeline.pipeline_id}): {e}")
+                print(f"Error in pipeline {i + 1}"
+                      f"({pipeline.pipeline_id}): {e}")
                 print("Recovery initiated: Switching to backup processor")
-                print("Recovery successful: Pipeline restored, processing resumed")
+                print("Recovery successful: Pipeline restored,"
+                      "processing resumed")
 
                 i += 1
 
@@ -292,7 +308,7 @@ if __name__ == "__main__":
 
     print("\nProcessing JSON data through pipeline...")
     json_data = {"sensor": "temp", "value": 23.5, "unit": "C"}
-    manager.process_with_pipeline(json_pipeline, set_data)
+    manager.process_with_pipeline(json_pipeline, json_data)
 
     print("\nProcessing CSV data through same pipeline...")
     csv_data = "user,action,timestamp"
@@ -302,6 +318,6 @@ if __name__ == "__main__":
     stream_data = [22.1, 23.0, 21.5, 22.8, 21.1]
     manager.process_with_pipeline(stream_pipeline, stream_data)
 
-    manager.chain_pipelines(set_data)
+    manager.chain_pipelines(json_data)
 
     print("\nNexus Integration complete. All systems operational.")
