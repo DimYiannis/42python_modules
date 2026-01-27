@@ -5,7 +5,7 @@ from typing import Any, List, Dict, Union, Optional
 class DataStream(ABC):
     """Abstract base class for data streams."""
 
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         self.stream_id = stream_id
         self.data: List[Any] = []
         self.processed_count = 0
@@ -40,7 +40,7 @@ class DataStream(ABC):
 class SensorStream(DataStream):
     """Stream handler for environmental sensor data."""
 
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         super().__init__(stream_id)
         print("Initializing Sensor Stream...")
         print(f"Stream ID: {self.stream_id}, Type: Environmental Data")
@@ -85,7 +85,7 @@ class SensorStream(DataStream):
 class TransactionStream(DataStream):
     """Stream handler for financial transaction data."""
 
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         super().__init__(stream_id)
         print("\nInitializing Transaction Stream...")
         print(f"Stream ID: {self.stream_id}, Type: Financial Data")
@@ -131,7 +131,7 @@ class TransactionStream(DataStream):
 class EventStream(DataStream):
     """Stream handler for system event data."""
 
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         super().__init__(stream_id)
         print("\nInitializing Event Stream...")
         print(f"Stream ID: {self.stream_id}, Type: System Events")
@@ -160,7 +160,7 @@ class EventStream(DataStream):
 class StreamProcessor:
     """Polymorphic stream processor."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.streams: List[DataStream] = []
 
     def register_stream(self, stream: DataStream) -> None:

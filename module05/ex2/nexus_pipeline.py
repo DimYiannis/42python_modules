@@ -60,7 +60,7 @@ class ProcessingPipeline(ABC):
     Abstract base class for data processing pipelines.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.stages: List[ProcessingStage] = []
 
     def add_stage(self, stage: ProcessingStage) -> None:
@@ -82,7 +82,7 @@ class JSONAdapter(ProcessingPipeline):
     Adapter for processing JSON data.
     """
 
-    def __init__(self, pipeline_id: str):
+    def __init__(self, pipeline_id: str) -> None:
         super().__init__()
         self.pipeline_id = pipeline_id
         self.failed_stage = None
@@ -128,7 +128,7 @@ class CSVAdapter(ProcessingPipeline):
     Adapter for processing CSV data.
     """
 
-    def __init__(self, pipeline_id: str):
+    def __init__(self, pipeline_id: str) -> None:
         super().__init__()
         self.pipeline_id = pipeline_id
         self.failed_stage = None
@@ -164,7 +164,7 @@ class StreamAdapter(ProcessingPipeline):
     Adapter for processing stream data.
     """
 
-    def __init__(self, pipeline_id: str):
+    def __init__(self, pipeline_id: str) -> None:
         super().__init__()
         self.pipeline_id = pipeline_id
         self.failed_stage = None
@@ -217,7 +217,7 @@ class NexusManager:
     Manager for orchestrating multiple pipelines.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.pipelines: List[ProcessingPipeline] = []
         print("Initializing Nexus Manager...")
         print("Pipeline capacity: 1000 streams/second")
