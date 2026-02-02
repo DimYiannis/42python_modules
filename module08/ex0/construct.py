@@ -4,13 +4,13 @@ import site
 
 def in_venv():
     """
-        deteect wether script is running
+        deteect whether script is running
         in a virtual environment
     """
-    if os.environ.get('VIRTUAL_ENV'):
+    if 'VIRTUAL_ENV' in os.environ:
         return True
 
-    if hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix):
+    if sys.base_prefix != sys.prefix:
         return True
 
     return False
@@ -20,10 +20,11 @@ def get_venv_name():
         get the name of the venv
     """
     venv_path = os.environ.get('VIRTUAL_ENV')
+
     if venv_path:
         return os.path.basename(venv_path)
 
-    if hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix:
+    if sys.base_prefix != sys.prefix:
         return os.path.basename(sys.prefix)
 
     return None
@@ -40,7 +41,7 @@ def display_outside_venv():
 
     print(f"\nCurrent Python: {sys.executable}")
     print("Virtual Environment: None detected")
-    
+ 
     print("\nWARNING: You're in the global environment!")
     print("The machines can see everything you install.")
 
@@ -53,7 +54,7 @@ def display_outside_venv():
 
 def display_in_venv():
     venv_name = get_venv_name()
-    venv_path = os.environ.get('VIRTUAL_ENV') or sys.prefix
+    venv_path = os.environ.get('VIRTUAL_ENV')
     package_paths = get_package_paths()
 
     print("\nMATRIX STATUS: Welcome to the construct")

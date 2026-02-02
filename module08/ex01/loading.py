@@ -49,15 +49,36 @@ def generate_matrix_data():
 
     np.random.seed(42)
 
-    data_points = 1000
-
     data = {
-        'value': np.random.normal(100, 15, 100),
-        'category': np.random.choice(['A', 'B', 'C'], 100)
+        'value': np.random.normal(500, 50, 1000),
+        'category': np.random.choice(['A', 'B', 'C'], 1000)
     }
 
     df = pd.DataFrame(data)
     return df
+
+def get_weather():
+    import requests
+    import pandas as pd
+
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {"latitude": 52.3676, "longitude": 4.9041, "hourly": "temperature_2m"}
+    data = requests.get(url, params=params).json()
+
+    df = pd.DataFrame(data['hourly'])['temperature_2m']
+    return df
+
+def weather_visualization(data):
+    import matplotlib.pyplot as plt
+
+    plt.figure(figsize=(10, 6))
+    plt.hist(data, bins=20, color="skyblue", edgecolor= "black")
+
+    plt.title('hourly temperature in Amsterdam')
+    plt.xlabel('temperature (C')
+    plt.ylabel("frequency")
+    plt.show()
+
 
 def analyze_data(df):
     """
@@ -76,7 +97,7 @@ def analyze_data(df):
         mean = df[df['category'] == category]['value'].mean()
         print(f"  {category}: {count} records, mean = {mean:.2f}")
 
-def create_visualization(df, filename='matrix_analysis.png'):
+def create_visualization(df):
     """
         create visualization for the data
     """
@@ -84,27 +105,30 @@ def create_visualization(df, filename='matrix_analysis.png'):
 
     print("\nGenerating visualization...")
 
-    bins = 10
-    counts, edges = None, None
-    
-    import numpy as np
-    counts, edges = np.histogram(df['value'], bins=bins)
-    
-    # Find max count for scaling
-    max_count = max(counts)
-    width = 50  # Width of the histogram
-    
-    # Print histogram
-    for i in range(bins):
-        bar_length = int((counts[i] / max_count) * width)
-        bar = '█' * bar_length
-        print(f"  {edges[i]:6.1f} - {edges[i+1]:6.1f} | {bar} {counts[i]}")
+    '''
+    # simple example
+    plt.hist(df['value'], bins=100)
 
+    plt.title("histogram")
+    plt.xlabel("value")
+    plt.ylabel("frequency")
+    '''
+
+    # more complex histogram per category
+    plt.hist(df[df['category'] == 'A']['value'], bins = 20, alpha=0.5, label='A')
+    plt.hist(df[df['category'] == 'B']['value'], bins=20, alpha=0.5, label='B')
+    plt.hist(df[df['category'] == 'C']['value'], bins=20, alpha=0.2, label='C')
+
+    plt.title("Value distribution by category")
+    plt.xlabel("value")
+    plt.ylabel("frequency")
+
+    plt.show()
 
 def show_package_comparison():
     """Show comparison of pip vs Poetry with installed package versions."""
     print("\n=== Package Management Comparison ===")
-    
+ 
     print("\nInstalled Package Versions:")
     packages = ['pandas', 'requests', 'matplotlib', 'numpy']
     for package in packages:
@@ -113,12 +137,12 @@ def show_package_comparison():
             print(f"  {package}: {version}")
         except importlib.metadata.PackageNotFoundError:
             print(f"  {package}: Not installed")
-    
+
     print("\npip (requirements.txt):")
     print("  - Simple dependency file")
     print("  - Manual version specification")
     print("  - Works with any virtual environment")
-    
+
     print("\nPoetry (pyproject.toml):")
     print("  - Automatic dependency resolution")
     print("  - Creates lock file for reproducibility")
@@ -128,20 +152,21 @@ def main():
     """Main function to run the loading program."""
     # Check dependencies
     status, all_available = check_dependencies()
-    
+
     if not all_available:
         show_installation_instructions()
         sys.exit(1)
-    
-    # Import after checking (to avoid import errors in check function)
+
+    # Import after checking to avoid import errors in check function
     import pandas as pd
-    
-    # Generate and analyze data
+
     df = generate_matrix_data()
     analysis = analyze_data(df)
-    
-    # Create visualization
-    create_visualization(df)
+
+    df = get_weather()
+    weather_visualization(df)
+
+    # create_visualization(df)
 
     show_package_comparison()
 
