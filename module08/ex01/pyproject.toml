@@ -1,12 +1,11 @@
 [tool.poetry]
-name = "matrix-loading-programs"
+name = "loading-programs"
 version = "1.0.0"
-description = "Matrix data analysis tool demonstrating Poetry dependency management"
+description = "tool demonstrating Poetry dependency management"
 authors = ["ydimitra"]
-packages = [{include = "ex01"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 pandas = "^2.0.0"
 requests = "^2.31.0"
 matplotlib = "^3.7.0"
@@ -14,12 +13,8 @@ numpy = "^1.24.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-black = "^23.7.0"
-flake8 = "^6.1.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.scripts]
-matrix-analyze = "ex01.loading:main"
