@@ -29,6 +29,7 @@ def check_dependencies():
             all_available = False
     return status, all_available
 
+
 def show_installation_instructions():
     print("\nERROR: Missing required dependencies!")
     print("\nTo install with pip:")
@@ -40,14 +41,13 @@ def show_installation_instructions():
     print("pip: Simple, uses requirements.txt, global or venv installation")
     print("Poetry: Advanced, uses pyproject.toml, automatic venv management, dependency resolution")
 
+
 def generate_matrix_data():
     """
         simulate data for analysis
     """
     import pandas as pd
-    import numpy as np
-
-    np.random.seed(42)
+    import numpy as np 
 
     data = {
         'value': np.random.normal(500, 50, 1000),
@@ -56,6 +56,7 @@ def generate_matrix_data():
 
     df = pd.DataFrame(data)
     return df
+
 
 def get_weather():
     import requests
@@ -67,6 +68,7 @@ def get_weather():
 
     df = pd.DataFrame(data['hourly'])['temperature_2m']
     return df
+
 
 def weather_visualization(data):
     import matplotlib.pyplot as plt
@@ -80,23 +82,6 @@ def weather_visualization(data):
     plt.show()
 
 
-def analyze_data(df):
-    """
-        analyze data and display stats
-    """
-    print("\nData Analysis:")
-    print(f"  Total records: {len(df)}")
-    print(f"  Mean value: {df['value'].mean():.2f}")
-    print(f"  Std deviation: {df['value'].std():.2f}")
-    print(f"  Min value: {df['value'].min():.2f}")
-    print(f"  Max value: {df['value'].max():.2f}")
-
-    print("\nCategory breakdown:")
-    for category in df['category'].unique():
-        count = len(df[df['category'] == category])
-        mean = df[df['category'] == category]['value'].mean()
-        print(f"  {category}: {count} records, mean = {mean:.2f}")
-
 def create_visualization(df):
     """
         create visualization for the data
@@ -105,15 +90,14 @@ def create_visualization(df):
 
     print("\nGenerating visualization...")
 
-    '''
     # simple example
     plt.hist(df['value'], bins=100)
 
     plt.title("histogram")
     plt.xlabel("value")
     plt.ylabel("frequency")
-    '''
 
+    '''
     # more complex histogram per category
     plt.hist(df[df['category'] == 'A']['value'], bins = 20, alpha=0.5, label='A')
     plt.hist(df[df['category'] == 'B']['value'], bins=20, alpha=0.5, label='B')
@@ -122,8 +106,9 @@ def create_visualization(df):
     plt.title("Value distribution by category")
     plt.xlabel("value")
     plt.ylabel("frequency")
-
+    '''
     plt.show()
+
 
 def show_package_comparison():
     """Show comparison of pip vs Poetry with installed package versions."""
@@ -148,6 +133,7 @@ def show_package_comparison():
     print("  - Creates lock file for reproducibility")
     print("  - Built-in virtual environment management")
 
+
 def main():
     """Main function to run the loading program."""
     # Check dependencies
@@ -160,13 +146,12 @@ def main():
     # Import after checking to avoid import errors in check function
     import pandas as pd
 
-    df = generate_matrix_data()
-    analysis = analyze_data(df)
+    df = generate_matrix_data() 
 
-    df = get_weather()
-    weather_visualization(df)
+    # df = get_weather()
+    # weather_visualization(df)
 
-    # create_visualization(df)
+    create_visualization(df)
 
     show_package_comparison()
 
