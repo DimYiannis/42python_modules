@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field, ValidationError
 
-class spacestation(BaseModel):
+class SpaceStation(BaseModel):
     """
         model for space station data with validation
     """
@@ -15,12 +15,27 @@ class spacestation(BaseModel):
     is_operational: bool = True
     notes: Optional[str] = Field(None, max_length=200)
 
-if __name__ == "__main__":
 
+class AmsterdamWeeklyWeather(BaseModel):
+    pass
+
+def showWeather() -> None:
+    import requests
+
+    print("\nWeather report for this week")
+
+    url = "https://api.open-meteo.com/v1/forecast?latitude=52.37&longitude=4.89&current=temperature_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/Amsterdam&forecast_days=7"
+    data = requests.get(url).json()
+    print(data.daily)
+
+    try:
+        weather = AmsterdamWeeklyWeather(data)
+
+def showSpaceStation() -> None:
     print("\nspace station data validation")
 
     try:
-        station = spacestation(
+        station = SpaceStation(
             station_id="iss001",
             name="international space station",
             crew_size=6,
@@ -43,7 +58,7 @@ if __name__ == "__main__":
     print("\nattempting to create invalid station (crew_size > 20)...")
 
     try:
-        invalid_station = spacestation(
+        invalid_station = SpaceStation(
             station_id="iss002",
             name="invalid station",
             crew_size=25,
@@ -56,4 +71,12 @@ if __name__ == "__main__":
         for error in e.errors():
             if error['loc'][0] == 'crew_size':
                 print(error['msg'])
+
+
+if __name__ == "__main__":
+
+    showSpaceStation()
+
+    showWeather()
+
 
