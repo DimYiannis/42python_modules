@@ -1,6 +1,6 @@
 from datetime import datetime
-from typing import Optional
 from pydantic import BaseModel, Field, ValidationError
+
 
 class SpaceStation(BaseModel):
     """
@@ -13,11 +13,34 @@ class SpaceStation(BaseModel):
     oxygen_level: float = Field(..., ge=0.0, le=100.0)
     last_maintenance: datetime
     is_operational: bool = True
-    notes: Optional[str] = Field(None, max_length=200)
+
+
+
+class CurrentWeather(BaseModel):
+    temperature: float = Field(alias="temperature_2m")
+    windspeed: float = Field(alias="wind_speed_10m")
+    time: datetime
+ 
+    class Config:
+        populate_by_name = True
+
+
+class DailyWeather(BaseModel):
+    time: list[str] = Field(..., min_length=7, max_length=7)
+    temperature_max: list[float] = Field(alias="temperature_2m_max")
+    temperature_min: list[float] = Field(alias="temperature_2m_min")
+    precipitation_sum: list[float] = Field(...)
+
+    class Config:
+        populate_by_name = True
 
 
 class AmsterdamWeeklyWeather(BaseModel):
-    pass
+    latitude: float
+    longitude: float
+    timezone: str
+    current: CurrentWeather
+    daily: DailyWeather
 
 def showWeather() -> None:
     import requests
@@ -25,11 +48,21 @@ def showWeather() -> None:
     print("\nWeather report for this week")
 
     url = "https://api.open-meteo.com/v1/forecast?latitude=52.37&longitude=4.89&current=temperature_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/Amsterdam&forecast_days=7"
-    data = requests.get(url).json()
-    print(data.daily)
 
     try:
-        weather = AmsterdamWeeklyWeather(data)
+        data = requests.get(url).json() 
+        weather = AmsterdamWeeklyWeather(**data)
+
+        print(f"\n📍 Current: {weather.current.temperature}°C,"
+              f"Wind: {weather.current.windspeed} km/h")
+        print(f"\n📅 7-Day Forecast:")
+        for i in range(len(weather.daily.time)):
+            print(f"{weather.daily.time[i]}: "
+                  f"{weather.daily.temperature_min[i]}°C - "
+                  f"{weather.daily.temperature_max[i]}°C, "
+                  f"Rain: {weather.daily.precipitation_sum[i]}mm")
+    except Exception as e:
+        print(f"problem fetching data: {e}")
 
 def showSpaceStation() -> None:
     print("\nspace station data validation")
